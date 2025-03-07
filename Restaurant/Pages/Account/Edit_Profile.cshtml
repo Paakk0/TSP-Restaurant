@@ -1,0 +1,58 @@
+﻿@page
+@model Restaurant.Pages.Account.Edit_ProfileModel
+
+@{
+    ViewData["Title"] = "Edit Profile";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Account/edit_profile.css" asp-append-version="true" />
+</head>
+
+<div class="edit-profile-container">
+    <div class="edit-profile-card">
+        <h2>Edit Profile</h2>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger">
+                @TempData["Error"]
+            </div>
+        }
+
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="input-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" class="input-field" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            @if (!Model.IsEmployee)
+            {
+
+                <div class="input-group">
+                    <label asp-for="Address"></label>
+                    <input asp-for="Address" class="input-field" required />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <div class="input-group">
+                    <label asp-for="City"></label>
+                    <input asp-for="City" class="input-field" required />
+                    <span asp-validation-for="City" class="text-danger"></span>
+                </div>
+            }
+
+            <div class="input-group">
+                <label asp-for="Email"></label>
+                <input asp-for="Email" class="input-field" required />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="button-group">
+                <button type="submit" class="btn-save">Save Changes</button>
+                <a asp-page="./Profile" class="btn-cancel">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

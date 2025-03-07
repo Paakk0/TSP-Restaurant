@@ -1,0 +1,46 @@
+﻿.admin-section {
+    max-width: 800px;
+    margin: auto;
+    background-color: #222;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #555;
+}
+
+.btn-view, .btn-edit, .btn-delete, .btn-complete {
+    padding: 6px 12px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 2px;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-view {
+    background-color: #3498db;
+}
+
+.btn-edit {
+    background-color: #f39c12;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+}
+
+.btn-complete {
+    background-color: #2ecc71;
+}

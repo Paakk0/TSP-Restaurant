@@ -1,0 +1,64 @@
+﻿@page
+@model Restaurant.Pages.Administration.StatisticsModel
+
+@{
+    ViewData["Title"] = "Business Statistics";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="~/css/Administration/statistics.css" asp-append-version="true" />
+</head>
+
+<div class="stats-container">
+    <h1>Business Statistics</h1>
+
+    <div class="charts">
+        <div class="chart-card">
+            <h3>Revenue</h3>
+            <canvas id="revenueChart"></canvas>
+            <h3>Revenue From Graph: $@Model.RevenueFromGraph.ToString("0.00")</h3>
+            <h3>Total Revenue: $@Model.TotalRevenue.ToString("0.00")</h3>
+        </div>
+
+        <div class="chart-card">
+            <h3>Most Ordered Dishes</h3>
+            <canvas id="topDishesChart"></canvas>
+            <h3>Total Completed Orders: @Model.TotalOrders</h3>
+        </div>
+
+        <div class="chart-card">
+            <h3>Order Distribution by Category</h3>
+            <canvas id="categoryChart"></canvas>
+            <h3>Total Categories: @Model.TotalCategories</h3>
+        </div>
+
+        <div class="chart-card">
+            <h3>User and Employee Growth Over Time</h3>
+            <canvas id="userEmployeeGrowthChart"></canvas>
+            <h3>Users: @Model._context.Users!.Count()</h3>
+            <h3>Employees: @Model._context.Employees!.Count()</h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    var revenueLabels = @Html.Raw(Json.Serialize(Model.RevenueLabels));
+    var revenueData = @Html.Raw(Json.Serialize(Model.RevenueData));
+
+    var topDishesLabels = @Html.Raw(Json.Serialize(Model.TopDishesLabels));
+    var topDishesData = @Html.Raw(Json.Serialize(Model.TopDishesData));
+
+    var categoryLabels = @Html.Raw(Json.Serialize(Model.CategoryLabels));
+    var categoryData = @Html.Raw(Json.Serialize(Model.CategoryData));
+
+    var userEmployeeGrowthLabels = @Html.Raw(Json.Serialize(Model.UserEmployeeGrowthLabels));
+    var userGrowthData = @Html.Raw(Json.Serialize(Model.UserGrowthData));
+    var employeeGrowthData = @Html.Raw(Json.Serialize(Model.EmployeeGrowthData));
+
+    var totalUsers = @Model._context.Users!.Count();
+    var totalEmployees = @Model._context.Employees!.Count();
+</script>
+
+<script src="~/js/statistics.js" asp-append-version="true"></script>

@@ -1,0 +1,69 @@
+﻿@page
+@using Restaurant.Model
+@model Restaurant.Pages.Administration.View_OrderModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/view_order.css" asp-append-version="true" />
+</head>
+
+
+<div class="order-details">
+    <h2>Order #@Model.Order!.Id</h2>
+
+    <div class="order-info">
+        <p><strong>Customer:</strong> @Model.Order.User!.Name</p>
+        @{
+            var employee = Model.Order.EmployeeId == 0 ? "Null" : Model._context.Employees!.Find(Model.Order.EmployeeId)!.Name;
+        }
+        <p><strong>Employee:</strong> @employee</p>
+        <p><strong>Location:</strong> @Model.Order.Location</p>
+        <p><strong>Address:</strong> @Model.Order.User.Address, @Model.Order.User.City</p>
+        <p><strong>Status:</strong> <span class="status">@Model.Order.Status</span></p>
+    </div>
+
+    <h3>Ordered Items</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.OrderItems!)
+            {
+                <tr>
+                    <td>@item.Dish!.Name</td>
+                    <td>@item.Quantity</td>
+                    <td>$@item.Dish.Price.ToString("0.00")</td>
+                    <td>$@((item.Quantity * item.Dish.Price).ToString("0.00"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <h3 class="total-price">Total: $@Model.TotalPrice.ToString("0.00")</h3>
+
+    <div class="actions">
+        @if (Model.Order.Status == 0)
+        {
+            <form method="post">
+                <input type="hidden" name="orderId" value="@Model.Order.Id" />
+                <button type="submit" class="btn-complete">Mark as Completed</button>
+            </form>
+        }
+        @if (Model.HttpContext.Session.GetObject<User>("User") != null)
+        {
+            <a href="OrdersManager" class="btn-back">Back to Orders</a>
+        }
+        else
+        {
+            <a href="/Employee_Operations/Workstation" class="btn-back">Back to Orders</a>
+        }
+    </div>
+</div>

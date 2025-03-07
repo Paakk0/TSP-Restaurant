@@ -1,0 +1,51 @@
+﻿@page
+@model Restaurant.Pages.Administration.Edit_DishModel
+@{
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/edit_dish.css" asp-append-version="true" />
+</head>
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<div class="container">
+    <h2>Edit Dish</h2>
+    <form method="post">
+        <input type="hidden" asp-for="Dish!.Id" />
+
+        <label for="name">Dish Name:</label>
+        <input type="text" id="name" asp-for="Dish!.Name" required>
+
+        <label for="dishType">Dish Type:</label>
+        <select id="dishType" asp-for="Dish!.DishTypeId" required>
+            @foreach (var type in Model._context.DishTypes!)
+            {
+                <option value="@type.Id">@type.Type</option>
+            }
+        </select>
+
+        <label for="price">Price ($):</label>
+        <input type="number" id="price" asp-for="Dish!.Price" step="0.01" required>
+
+        <label>Ingredients:</label>
+        <div class="ingredients-container">
+            @foreach (var ingredient in Model._context.Ingredients!)
+            {
+                <div class="ingredient-item">
+                    <input type="checkbox" id="ingredient_@ingredient.Id" name="SelectedIngredients" value="@ingredient.Id"
+                    @(Model.ContainingIngredients != null && Model.ContainingIngredients.Contains(ingredient.Id) ? "checked" : "")>
+                    <label for="ingredient_@ingredient.Id">@ingredient.Name</label>
+                </div>
+            }
+
+        </div>
+
+        <button type="submit">Save Changes</button>
+    </form>
+</div>

@@ -1,0 +1,46 @@
+﻿@page
+@model Restaurant.Pages.Administration.Add_DishModel
+@{
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/add_dish.css" asp-append-version="true" />
+</head>
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<div class="container">
+    <h2>Add New Dish</h2>
+    <form method="post">
+        <label for="name">Dish Name:</label>
+        <input type="text" id="name" asp-for="Dish!.Name" required>
+
+        <label for="dishType">Dish Type:</label>
+        <select id="dishType" asp-for="Dish!.DishTypeId" required>
+            @foreach (var type in Model._context.DishTypes!)
+            {
+                <option value="@type.Id">@type.Type</option>
+            }
+        </select>
+
+        <label for="price">Price ($):</label>
+        <input type="number" id="price" asp-for="Dish!.Price" step="0.01" min="0.01" required>
+
+        <label>Ingredients:</label>
+        <div class="ingredients-container">
+            @foreach (var ingredient in Model._context.Ingredients!)
+            {
+                <div class="ingredient-item">
+                    <input type="checkbox" id="ingredient_@ingredient.Id" name="SelectedIngredients" value="@ingredient.Id">
+                    <label for="ingredient_@ingredient.Id">@ingredient.Name</label>
+                </div>
+            }
+        </div>
+        <button type="submit">Add Dish</button>
+    </form>
+</div>

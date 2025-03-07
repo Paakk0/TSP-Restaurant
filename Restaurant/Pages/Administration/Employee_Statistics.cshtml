@@ -1,0 +1,63 @@
+﻿@page
+@model Restaurant.Pages.Administration.Employee_StatisticsModel
+@{
+    ViewData["Title"] = "Employee Statistics";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/employee_statistics.css" asp-append-version="true" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<h1>Personal Statistics</h1>
+
+<div class="statistics-container">
+    <div class="statistics-section">
+        <h2>Employee Information</h2>
+        <p><strong>Name:</strong> @Model.Employee!.Name</p>
+        <p><strong>Email:</strong> @Model.Employee.Email</p>
+        <p><strong>Employment Date:</strong> @Model.Employee.EmploymentDate.ToShortDateString()</p>
+        <p>
+            <strong>Is Online:</strong> <span class="status @(Model.Employee.IsOnline ? "online" : "offline")">
+                @(Model.Employee.IsOnline ? "Yes" : "No")
+            </span>
+        </p>
+    </div>
+
+    <div class="statistics-section">
+        <h2>Order Statistics</h2>
+        <p><strong>Total Orders:</strong> @Model.TotalOrders</p>
+        <p><strong>Completed Orders:</strong> @Model.CompletedOrders</p>
+        <p><strong>Pending Orders:</strong> @Model.PendingOrders</p>
+        <p><strong>Completion Rate:</strong> @(Model.TotalOrders > 0 ? (Model.CompletedOrders * 100 / Model.TotalOrders) : 0)%</p>
+    </div>
+
+    <div class="statistics-section">
+        <h2>Income Statistics</h2>
+        <p><strong>Income:</strong> $@Model.Income.ToString("0.00")</p>
+        <p><strong>Tips:</strong> $@Model.Tips.ToString("0.00")</p>
+        <p><strong>Total Earnings:</strong> $@Model.Total.ToString("0.00")</p>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="orderChart"></canvas>
+    </div>
+    <div class="chart-container">
+        <canvas id="incomeChart"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var orderData = [@Model.TotalOrders, @Model.CompletedOrders, @Model.PendingOrders];
+        var incomeData = @Html.Raw(Json.Serialize(Model.IncomeData));
+    </script>
+    <script src="~/js//employee_statistics.js"></script>
+}

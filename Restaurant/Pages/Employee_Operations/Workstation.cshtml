@@ -1,0 +1,90 @@
+﻿@page
+@model Restaurant.Pages.Employee_Operations.WorkstationModel
+@using Microsoft.EntityFrameworkCore;
+@{
+    ViewData["Title"] = "Workstation";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Employee_Operations/workstation.css" asp-append-version="true" />
+</head>
+
+<!--STATUS 0-->
+
+<div class="admin-section">
+    <h2>Awaiting Orders</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Location</th>
+            <th>Total Price</th>
+            <th>Tip</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @if (Model.UnfinishedOrders!.Any())
+        {
+            @foreach (var order in Model.UnfinishedOrders!)
+            {
+                var total = Model._context.Orders!
+                .Where(o => o.Id == order.Id)
+                .Join(Model._context.Order_Dishes!, o => o.Id, od => od.OrderId, (o, od) => new { o, od })
+                .Join(Model._context.Dishes!, od => od.od.DishId, d => d.Id, (od, d) => d.Price * od.od.Quantity)
+                .Sum();
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.User!.Name</td>
+                    <td>@order.Location</td>
+                    <td>$@total.ToString("0.00")</td>
+                    <td>$@order.Tip</td>
+                    <td>@order.Status</td>
+                    <td>
+                        <a asp-page="/Administration/View_Order" asp-route-id="@order.Id" asp-route-task="view" class="btn-view">View</a>
+                        <a asp-page="/Administration/View_Order" asp-route-id="@order.Id" asp-route-task="complete" class="btn-complete">Mark as completed</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<!--STATUS 1-->
+
+<div class="admin-section">
+    <h2>Completed Orders</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Location</th>
+            <th>Total Price</th>
+            <th>Tip</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @if (Model.FinishedOrders!.Any())
+        {
+
+            @foreach (var order in Model.FinishedOrders!)
+            {
+                var total = Model._context.Orders!
+                .Where(o => o.Id == order.Id)
+                .Join(Model._context.Order_Dishes!, o => o.Id, od => od.OrderId, (o, od) => new { o, od })
+                .Join(Model._context.Dishes!, od => od.od.DishId, d => d.Id, (od, d) => d.Price * od.od.Quantity)
+                .Sum();
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.User!.Name</td>
+                    <td>@order.Location</td>
+                    <td>$@total.ToString("0.00")</td>
+                    <td>$@order.Tip</td>
+                    <td>@order.Status</td>
+                    <td>
+                        <a asp-page="/Administration/View_Order" asp-route-id="@order.Id" asp-route-task="view" class="btn-view">View</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>

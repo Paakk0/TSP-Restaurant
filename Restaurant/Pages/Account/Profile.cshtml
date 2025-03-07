@@ -1,0 +1,41 @@
+﻿@page "Restaurant"
+@model Restaurant.Pages.Account.ProfileModel
+
+@{
+    ViewData["Title"] = "Profile";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Account/profile.css" asp-append-version="true" />
+</head>
+
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h2>@Model.Name</h2>
+            <p class="role">@Model.Role</p>
+        </div>
+        <div class="profile-details">
+            @if (Model.Address != null)
+            {
+                <div class="detail">
+                    <strong>📍 Address:</strong> @Model.Address
+                </div>
+                <div class="detail">
+                    <strong>🏙 City:</strong> @Model.City
+                </div>
+            }
+            <div class="detail">
+                <strong>📧 Email:</strong> @Model.Email
+            </div>
+            <div class="detail">
+                <strong>Registration Date:</strong> @Model.Date
+            </div>
+        </div>
+        <div class="profile-actions">
+            <a asp-page="./Edit_Profile" asp-route-id="@Model.Id" asp-route-isEmployee="@Model.isEmployee.ToString().ToLower()" class="btn btn-edit">Edit Profile</a>
+            <a asp-page="./Log_out" class="btn btn-logout">Log Out</a>
+        </div>
+    </div>
+</div>

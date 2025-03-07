@@ -1,0 +1,74 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+.statistics-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.statistics-section {
+    background: #34495e;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+    .statistics-section h2 {
+        color: white;
+        text-align: center;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+    }
+
+p {
+    font-size: 16px;
+    margin: 10px 0;
+}
+
+.status {
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.online {
+    background: #28a745;
+    color: white;
+}
+
+.offline {
+    background: #dc3545;
+    color: white;
+}
+
+.chart-container {
+    background: #34495e;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    height: 300px;
+}
+
+@media (max-width: 768px) {
+    .statistics-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .chart-container {
+        width: 100%;
+    }
+}

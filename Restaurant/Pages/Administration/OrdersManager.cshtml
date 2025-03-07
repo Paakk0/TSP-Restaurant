@@ -1,0 +1,95 @@
+﻿@page
+@model Restaurant.Pages.Administration.OrdersManagerModel
+@{
+    ViewData["Title"] = "Orders Manager";
+}
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/order_manager.css" asp-append-version="true" />
+</head>
+
+<!--STATUS 0-->
+<div class="admin-section">
+    <h2>Awaiting Orders</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Employee</th>
+            <th>Location</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var order in Model.UnfinishedOrders!)
+        {
+            var total = Model._context.Orders!
+            .Where(o => o.Id == order.Id)
+            .Join(Model._context.Order_Dishes!, o => o.Id, od => od.OrderId, (o, od) => new { o, od })
+            .Join(Model._context.Dishes!, od => od.od.DishId, d => d.Id, (od, d) => d.Price * od.od.Quantity)
+            .Sum();
+
+            var employee = order.EmployeeId == 0 ? "Null" : Model._context.Employees!.Find(order.EmployeeId)!.Name;
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.User!.Name</td>
+                <td>@employee</td>
+                <td>@order.Location</td>
+                <td>$@total.ToString("0.00")</td>
+                <td>@order.Status</td>
+                <td>
+                    <a href="./View_Order?id=@order.Id&task=view" class="btn-view">View</a>
+                    <a href="./Edit_Order?id=@order.Id" class="btn-edit">Edit</a>
+                    <a href="./View_Order?id=@order.Id&task=delete" class="btn-delete">Cancel</a>
+                    <a href="./View_Order?id=@order.Id&task=complete" class="btn-complete">Mark as Completed</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<!--STATUS 1-->
+
+<div class="admin-section">
+    <h2>Completed Orders</h2>
+    <table>
+        <tr>
+            <th>Order ID</th>
+            <th>User</th>
+            <th>Employee</th>
+            <th>Location</th>
+            <th>Total Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var order in Model.FinishedOrders!)
+        {
+            var total = Model._context.Orders!
+            .Where(o => o.Id == order.Id)
+            .Join(Model._context.Order_Dishes!, o => o.Id, od => od.OrderId, (o, od) => new { o, od })
+            .Join(Model._context.Dishes!, od => od.od.DishId, d => d.Id, (od, d) => d.Price * od.od.Quantity)
+            .Sum();
+
+            var employee = order.EmployeeId == 0 ? "Null" : Model._context.Employees!.Find(order.EmployeeId)!.Name;
+
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.User!.Name</td>
+                <td>@employee</td>
+                <td>@order.Location</td>
+                <td>$@total.ToString("0.00")</td>
+                <td>@order.Status</td>
+                <td>
+                    <a href="./View_Order?id=@order.Id&task=view" class="btn-view">View</a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

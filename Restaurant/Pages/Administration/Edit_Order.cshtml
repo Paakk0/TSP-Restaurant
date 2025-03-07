@@ -1,0 +1,61 @@
+﻿@page
+@model Restaurant.Pages.Administration.Edit_OrderModel
+@{
+    ViewData["Title"] = "Edit Order";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/edit_order.css" asp-append-version="true" />
+</head>
+
+<h1>Edit Order</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Order.Id" class="control-label"></label>
+                <input asp-for="Order.Id" class="form-control" readonly />
+                <span asp-validation-for="Order.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.UserId" class="control-label"></label>
+                <input asp-for="Order.UserId" class="form-control" />
+                <span asp-validation-for="Order.UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.EmployeeId" class="control-label"></label>
+                <input asp-for="Order.EmployeeId" class="form-control" />
+                <span asp-validation-for="Order.EmployeeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Status" class="control-label"></label>
+                <input asp-for="Order.Status" class="form-control" />
+                <span asp-validation-for="Order.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Location" class="control-label"></label>
+                <input asp-for="Order.Location" class="form-control" />
+                <span asp-validation-for="Order.Location" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order.Date" class="control-label"></label>
+                <input asp-for="Order.Date" class="form-control" />
+                <span asp-validation-for="Order.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./OrdersManager">Back to List</a>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,210 @@
+﻿body {
+    background-color: #f8f5f2;
+    color: #333;
+    font-family: Arial, sans-serif;
+}
+
+.filter-options {
+    background: #34495e;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+    .filter-options form {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+    }
+
+.price-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ingredient-filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-options label {
+    font-weight: bold;
+    color: white;
+}
+
+.filter-options select,
+.filter-options input {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.category {
+    background-size: cover;
+    background-position: center;
+    width: 45%;
+    height: auto;
+    margin: 15px 10px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+}
+
+    .category h1 {
+        font-size: 22px;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 10px;
+        border-radius: 5px;
+    }
+
+.product-list {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+    .product-list.hidden {
+        display: none;
+    }
+
+    .product-list li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        color: black;
+    }
+
+        .product-list li:last-child {
+            border-bottom: none;
+        }
+
+.product-checkbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+    transform: scale(1.3);
+    margin-right: 10px;
+}
+
+.product-checkbox input[type="checkbox"]:checked {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.quantity-input {
+    width: 60px;
+    padding: 5px;
+    font-size: 16px;
+    margin-left: 10px;
+    display: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.product-checkbox input[type="checkbox"]:checked + .quantity-input {
+    display: inline-block;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+.place-radio {
+    display: none;
+}
+
+    .place-radio + .place-label {
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 12px 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        display: inline-block;
+        margin-right: 15px;
+        transition: background-color 0.3s ease;
+    }
+
+    .place-radio:checked + .place-label {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
+    }
+
+        .place-radio:checked + .place-label:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+    .place-radio + .place-label:hover {
+        background-color: #e6e6e6;
+        border-color: #888;
+    }
+
+#table-number-container {
+    margin-top: 20px;
+}
+
+#table-number {
+    padding: 8px;
+    font-size: 14px;
+}
+
+input[type="submit"] {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    input[type="submit"]:hover {
+        background-color: #218838;
+    }
+
+.tip-input {
+    width: 100px;
+    padding: 8px;
+    font-size: 14px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

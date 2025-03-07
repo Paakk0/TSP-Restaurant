@@ -1,0 +1,70 @@
+﻿@using Restaurant.Model
+@{
+    User? user = Context.Session.GetObject<User>("User");
+    Employee? employee = Context.Session.GetObject<Employee>("Employee");
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Restaurant</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Restaurant.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/layout.css" asp-append-version="true" />
+</head>
+<body class="bg-dark text-light">
+    <header>
+        <nav class="navbar navbar-expand-sm border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <div class="mx-auto">
+                    <a class="navbar-brand" asp-area="" asp-page="/Index">Restaurant</a>
+                </div>
+                <div class="ml-auto">
+                    @if (user != null || employee != null)
+                    {
+                        <div class="dropdown">
+                            <a class="navbar-brand dropdown-toggle" asp-page="/Account/Profile" id="profileDropdown" data-toggle="dropdown">Profile</a>
+                            <div class="dropdown-menu">
+                                @if (employee != null)
+                                {
+                                    <a class="dropdown-item" asp-page="/Employee_Operations/Workstation">Workstation</a>
+                                    <a class="dropdown-item" asp-page="/Administration/Employee_Statistics" asp-route-id="@employee.Id">Personal Statistics</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-page="/Account/OrderHistory">Orders History</a>
+                                    @if (user?.Role == 1)
+                                    {
+                                        <a class="dropdown-item" asp-page="/Administration/OrdersManager">Orders Manager</a>
+                                        <a class="dropdown-item" asp-page="/Administration/AdminPanel">Admin Panel</a>
+                                        <a class="dropdown-item" asp-page="/Administration/Statistics">Restaurant Statistics</a>
+                                    }
+                                }
+                                <a class="dropdown-item" asp-page="/Account/Log_out">Log Out</a>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <a class="navbar-brand login-link" asp-page="/Account/Log_in">Log In</a>
+                    }
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

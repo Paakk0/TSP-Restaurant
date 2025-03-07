@@ -1,0 +1,111 @@
+﻿@page
+@using Restaurant.Model
+@model IndexModel
+@{
+    ViewData["Title"] = "Main";
+    const int MAX_TABLES = 15;
+}
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/index.css" asp-append-version="true" />
+    <script src="~/js/index.js"></script>
+</head>
+
+<!--FILTER OPTIONS-->
+
+<div class="filter-options" id="filterOptions">
+    <form method="get">
+        <div>
+            <input type="checkbox" id="enableFilterOptions" asp-for="EnableFilterOptions" onchange="this.form.submit();" />
+            <label for="enableFilterOptions">Enable Filter Options</label>
+        </div>
+        <div class="price-filter">
+            <label for="priceFilter">Sort by Price:</label>
+            <select name="priceFilterOption" id="priceFilter" asp-for="PriceFilterOption">
+                <option value="Higher">Higher</option>
+                <option value="Lower">Lower</option>
+            </select>
+            <input type="number" name="priceFilterValue" id="priceFilterValue" asp-for="PriceFilterValue" />
+        </div>
+
+        <div class="ingredient-filter">
+            <label for="ingredientFilter">Filter by Ingredient:</label>
+            <select name="ingredientFilterOption" id="ingredientFilter" asp-for="IngredientFilterOption">
+                <option value="Include">Include</option>
+                <option value="Exclude">Exclude</option>
+            </select>
+            <select name="ingredientFilterValues" id="ingredientFilterValues" asp-for="IngredientFilterValues" multiple>
+                @foreach (var ingredient in Model.Ingredients!)
+                {
+                    <option value="@ingredient.Id">@ingredient.Name</option>
+                }
+            </select>
+        </div>
+    </form>
+</div>
+
+<!--MENU-->
+
+<button class="expand-all-btn" onclick="toggleAllMenus(this)">Expand All</button>
+
+<form method="post">
+    <div class="text-center d-inline-flex flex-wrap">
+        @foreach (var currentDishType in Model.DishTypes!)
+        {
+            <div class="category" data-dish-type="@currentDishType.Type" style="background-image: url('@Url.Content($"~/images/{currentDishType.Type}.jpg")');">
+                <h1>@currentDishType.Type</h1>
+                <button type="button" class="toggle-menu-btn" onclick="toggleCurrentMenu(this)">Toggle</button>
+                <ul class="product-list hidden">
+                    @foreach (var currentDish in Model.Dishes!.Where(d => d.DishTypeId == currentDishType.Id))
+                    {
+                        <li data-price="@currentDish.Price" data-ingredients="@string.Join(',', Model.Dish_Ingredients!.Where(di => di.DishId == currentDish.Id).Select(di => Model.Ingredients!.FirstOrDefault(i => i.Id == di.IngredientId)!.Name))">
+                            <label class="product-checkbox">
+                                <span>@currentDish.Name - $@currentDish.Price.ToString("0.00")</span>
+                                <input type="checkbox" value="@currentDish.Id" name="SelectedDishes" class="dish-checkbox" onchange="toggleQuantityInput(this)" />
+                            </label>
+                            <input type="number" name="DishQuantities[@currentDish.Id]" min="1" value="1" class="quantity-input" style="display: none;" />
+                            <div class="ingredients">
+                                @foreach (var ingredient in Model.Dish_Ingredients!.Where(di => di.DishId == currentDish.Id).Select(di => Model.Ingredients!.FirstOrDefault(i => i.Id == di.IngredientId)))
+                                {
+                                    <span>@ingredient!.Name, </span>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+
+    <!--ORDER LOCATION-->
+
+    <div>
+        <input type="radio" name="Place" id="table" value="Table" class="place-radio" onchange="toggleTableNumber()" />
+        <label for="table" class="place-label">Table</label>
+
+        <input type="radio" id="home" name="Place" value="Home" class="place-radio" asp-for="Place" onchange="toggleTableNumber()" />
+        <label for="home" class="place-label">Home</label>
+    </div>
+
+    <div id="table-number-container" style="display:none;">
+        <label for="table-number">Table Number:</label>
+        <select id="table-number" name="Place" asp-for="Place">
+            @for (int i = 1; i <= MAX_TABLES; i++)
+            {
+                <option value="Table @i">Table @i</option>
+            }
+        </select>
+        <br>
+        <label> Leave a tip: </label>
+        <input type="number" name="Tip" class="tip-input" asp-for="Tip" value="0" min="0" step="0.5" />
+    </div>
+    <br />
+    <input class="order-btn" type="submit" value="Order" />
+</form>

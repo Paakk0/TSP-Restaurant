@@ -1,0 +1,67 @@
+﻿@page
+@model Restaurant.Pages.Administration.Edit_UserModel
+
+@{
+    ViewData["Title"] = "Edit_User";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Administration/edit_user.css" asp-append-version="true" />
+</head>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="edit-user-container">
+    <h2>Edit User</h2>
+
+    <form method="post">
+        <input type="hidden" asp-for="User!.Id" />
+
+        <div class="input-group">
+            <label asp-for="User!.Name"></label>
+            <input asp-for="User!.Name" class="input-field" required />
+            <span asp-validation-for="User!.Name" class="text-danger"></span>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="User!.Email"></label>
+            <input asp-for="User!.Email" type="email" class="input-field" required />
+            <span asp-validation-for="User!.Email" class="text-danger"></span>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="User!.Address"></label>
+            <input asp-for="User!.Address" class="input-field" required />
+            <span asp-validation-for="User!.Address" class="text-danger"></span>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="User!.City"></label>
+            <input asp-for="User!.City" class="input-field" required />
+            <span asp-validation-for="User!.City" class="text-danger"></span>
+        </div>
+
+        <div class="input-group">
+            <label asp-for="User!.Role"></label>
+            <select asp-for="User!.Role" class="input-field">
+                <option value="1">Admin</option>
+                <option value="0">User</option>
+            </select>
+            <span asp-validation-for="User!.Role" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn-submit">Save Changes</button>
+        <a href="AdminPanel" class="btn-cancel">Cancel</a>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

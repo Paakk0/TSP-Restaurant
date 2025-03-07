@@ -1,0 +1,126 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    margin-bottom: 60px;
+}
+
+.ml-auto {
+    position: absolute;
+    right: 1vw;
+    top: auto;
+}
+
+.navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    flex-wrap: nowrap;
+    position: relative;
+    z-index: 1;
+}
+
+
+    .navbar .mx-auto {
+        flex-grow: 1;
+        text-align: center;
+    }
+
+    .navbar .navbar-brand {
+        color: white !important;
+        font-size: 36px;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        transition: color 0.3s ease;
+    }
+
+        .navbar .navbar-brand:hover {
+            color: #f39c12 !important;
+        }
+
+        .navbar .navbar-brand.login-link {
+            background-color: #1b6ec2;
+            color: white !important;
+            padding: 6px 15px;
+            font-size: 14px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            text-align: center;
+            display: inline-block;
+        }
+
+            .navbar .navbar-brand.login-link:hover {
+                background-color: #1861ac;
+                color: #fff !important;
+            }
+
+    .navbar .dropdown-menu {
+        background-color: #34495e;
+        border: none;
+        position: absolute;
+        right: 0;
+        top: 100%;
+        min-width: 160px;
+        padding: 5px 0;
+        box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+        display: none;
+    }
+
+    .navbar .dropdown-item {
+        color: #ecf0f1;
+        padding: 10px 15px;
+        text-align: left;
+        font-size: 14px;
+    }
+
+        .navbar .dropdown-item:hover {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+    .navbar .dropdown-toggle {
+        padding: 6px 15px;
+        font-size: 14px;
+        color: white;
+        text-decoration: none;
+    }
+
+        .navbar .dropdown-toggle:hover {
+            color: #f39c12;
+        }
+
+    .navbar .dropdown:hover .dropdown-menu {
+        display: block;
+    }
+
+@media (max-width: 768px) {
+    .navbar .navbar-brand {
+        font-size: 18px;
+    }
+
+    .navbar .dropdown-menu {
+        position: static;
+        width: 100%;
+    }
+
+    .navbar .navbar-brand.login-link {
+        font-size: 14px;
+    }
+}
+
+.navbar .navbar-brand {
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+}
+
+.navbar .ml-auto {
+    margin-left: auto;
+}
+
+.navbar .dropdown-menu {
+    padding: 5px 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}

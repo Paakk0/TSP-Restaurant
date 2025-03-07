@@ -1,0 +1,104 @@
+﻿body {
+    font-family: Arial, sans-serif;
+}
+
+.admin-container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #34495e;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 200px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.admin-section {
+    background: #34495e;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+    .admin-section h2 {
+        margin-bottom: 10px;
+    }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #bdc3c7;
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #2c3e50;
+    color: white;
+}
+
+.btn-edit, .btn-delete, .btn-view, .btn-add, .btn-confirm {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-edit {
+    background: #1abc9c;
+}
+
+.btn-delete {
+    background: #e74c3c;
+}
+
+.btn-view {
+    background: #3498db;
+}
+
+.btn-add {
+    background: #2ecc71;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.btn-confirm {
+    background: #f39c12;
+}
+
+.btn-edit:hover {
+    background: #16a085;
+}
+
+.btn-delete:hover {
+    background: #c0392b;
+}
+
+.btn-view:hover {
+    background: #2980b9;
+}
+
+.btn-add:hover {
+    background: #27ae60;
+}
+
+.btn-confirm:hover {
+    background: #d35400;
+}

@@ -1,0 +1,41 @@
+﻿@page
+@model Restaurant.Pages.Account.Log_inModel
+
+@{
+    ViewData["Title"] = "Log In";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/Account/login.css" asp-append-version="true" />
+</head>
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>Welcome Back</h2>
+        <form method="post">
+            <div class="input-group">
+                <input asp-for="Name" class="input-field" placeholder="Email" required />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <input asp-for="Password" type="password" class="input-field" placeholder="Password" required />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-submit">Log In</button>
+
+            <p class="switch-text">
+                Don't have an account? <a asp-page="Register">Sign up</a>
+            </p>
+        </form>
+    </div>
+</div>

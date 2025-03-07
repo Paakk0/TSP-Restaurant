@@ -1,0 +1,75 @@
+﻿@page
+@model Restaurant.Pages.Account.OrderHistoryModel
+@{
+    ViewData["Title"] = "Your Orders";
+}
+
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/Account/order_history.css" asp-append-version="true" />
+</head>
+
+@if (Model.TempData["Error"] != null)
+{
+    <div class="alert alert-danger text-center">
+        @Model.TempData["Error"]
+    </div>
+}
+
+<h2 class="text-center text-white">📜 Your Order History</h2>
+
+@if (Model.OrderList != null && Model.OrderList.Count > 0)
+{
+    <div class="order-history-container">
+        @foreach (var order in Model.OrderList.OrderByDescending(o => o.Status == 0).ThenByDescending(o => o.Date))
+        {
+            var orderDishes = Model.OrderDishes!.Where(od => od.OrderId == order.Id).ToList();
+            var totalPrice = orderDishes.Sum(od => Model.Dishes!.FirstOrDefault(d => d.Id == od.DishId)?.Price * od.Quantity ?? 0);
+
+            <div class="order-card @(order.Status == 0 ? "active-order" : "")">
+                <div class="order-header">
+                    <h3>Order #@order.Id</h3>
+                    <span class="order-status @(order.Status == 0 ? "active" : "completed")">
+                        @(order.Status == 0 ? "🟢 Active Order" : "✅ Completed")
+                    </span>
+                </div>
+                <p><strong>📅 Placed on:</strong> @order.Date.ToString("MMMM dd, yyyy")</p>
+                <p><strong>📍 Location:</strong> @order.Location</p>
+                @{
+                    var employee = order.EmployeeId == 0 ? "❌ No Assigned Employee" : Model._context.Employees!.Find(order.EmployeeId)!.Name;
+                    if (order.EmployeeId != 0)
+                    {
+                        <p><strong>👨‍🍳 Employee:</strong> @employee</p>
+                        <p><strong>💵 Tip left:</strong> @(order.Tip > 0 ? $"${order.Tip}" : "No Tip 😞")</p>
+                    }
+                }
+
+                <p><strong>💰 Total Price:</strong> $@totalPrice.ToString("0.00")</p>
+
+                <button class="btn btn-primary details-btn" onclick="toggleDetails(@order.Id)">
+                    🔍 View Details
+                </button>
+
+                <div id="orderDetails-@order.Id" class="order-details">
+                    <h4>🍽️ Dishes in this Order:</h4>
+                    <ul>
+                        @foreach (var od in orderDishes)
+                        {
+                            var dish = Model.Dishes!.FirstOrDefault(d => d.Id == od.DishId);
+                            if (dish != null)
+                            {
+                                double currDishTotalPrice = dish.Price * od.Quantity;
+                                <li>@dish.Name x @od.Quantity - <strong>@currDishTotalPrice.ToString("0.00")</strong></li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <p class="text-center">No orders found.</p>
+}
+
+<script src="~/js/order_history.js"></script>
